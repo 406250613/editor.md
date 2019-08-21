@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>editor</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="static/xss.min.js"></script>
+  <script src="static/jquery.min.js"></script>
+  <!-- <script src="static/lang/en.js"></script>
+  <script src="static/lang/zh-CN.js"></script> -->
+  <script src="static/highlight/highlight.min.js"></script>
+  <link rel="stylesheet" href="static/css/common.css">
+  <!-- <script src="static/diff/difflib.js"></script>
+  <link rel="stylesheet" href="static/diff/diffview.css">
+  <script src="static/diff/diffview.js"></script> -->
+  <link rel="stylesheet" href="static/editor.md/css/editormd.min.css">
+  <link rel="stylesheet" href="static/editor.md/css/editormd.logo.min.css">
+  <link rel="stylesheet" href="static/editor.md/css/editormd.preview.min.css">
+  <!--<script src="static/editor.md/languages/en.js"></script>-->
+  <!--<script src="static/editor.md/languages/zh-tw.js"></script>-->
+  <!-- <script src="static/editor.md/lib/codemirror/addon/comment/comment.js"></script>
+  <!-- <script src="static/editor.md/lib/codemirror/addon/comment/continuecomment.js"></script>-->
+  <!--<link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/dialog/dialog.css">
+  <script src="static/editor.md/lib/codemirror/addon/dialog/dialog.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/display/fullscreen.css">
+  <script src="static/editor.md/lib/codemirror/addon/display/fullscreen.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/display/panel.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/display/placeholder.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/display/rulers.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/edit/closebrackets.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/edit/closetag.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/edit/continuelist.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/edit/matchbrackets.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/edit/matchtags.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/edit/trailingspace.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/fold/brace-fold.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/fold/comment-fold.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/fold/foldcode.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/fold/foldgutter.css">
+  <script src="static/editor.md/lib/codemirror/addon/fold/foldgutter.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/fold/indent-fold.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/fold/markdown-fold.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/fold/xml-fold.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/hint/anyword-hint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/hint/css-hint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/hint/html-hint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/hint/javascript-hint.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/hint/show-hint.css">
+  <script src="static/editor.md/lib/codemirror/addon/hint/show-hint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/hint/xml-hint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/hint/sql-hint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/lint/coffeescript-lint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/lint/css-lint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/lint/javascript-lint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/lint/json-lint.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/lint/lint.css">
+  <script src="static/editor.md/lib/codemirror/addon/lint/lint.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/lint/yaml-lint.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/merge/merge.css">
+  <script src="static/editor.md/lib/codemirror/addon/merge/merge.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/mode/loadmode.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/mode/multiplex.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/mode/multiplex_test.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/mode/overlay.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/mode/simple.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/runmode/colorize.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/runmode/runmode.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/runmode/runmode.node.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/runmode/runmode-standalone.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/scroll/annotatescrollbar.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/scroll/scrollpastend.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/scroll/simplescrollbars.css">
+  <script src="static/editor.md/lib/codemirror/addon/scroll/simplescrollbars.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/search/match-highlighter.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/search/matchesonscrollbar.css">
+  <script src="static/editor.md/lib/codemirror/addon/search/matchesonscrollbar.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/search/search.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/search/searchcursor.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/selection/active-line.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/selection/mark-selection.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/selection/selection-pointer.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/addon/tern/tern.css">
+  <script src="static/editor.md/lib/codemirror/addon/tern/tern.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/tern/worker.js"></script>
+  <script src="static/editor.md/lib/codemirror/addon/wrap/hardwrap.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/lib/codemirror.css">
+  <script src="static/editor.md/lib/codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/3024-day.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/3024-night.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/ambiance.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/ambiance-mobile.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/base16-dark.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/base16-light.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/blackboard.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/cobalt.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/colorforth.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/eclipse.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/elegant.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/erlang-dark.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/lesser-dark.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/mbo.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/mdn-like.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/midnight.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/monokai.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/neat.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/neo.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/night.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/paraiso-dark.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/paraiso-light.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/pastel-on-dark.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/rubyblue.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/solarized.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/the-matrix.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/tomorrow-night-bright.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/tomorrow-night-eighties.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/twilight.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/vibrant-ink.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/xq-dark.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/xq-light.css">
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/theme/zenburn.css">
+  <script src="static/editor.md/lib/codemirror/addons.min.js"></script>
+  <link rel="stylesheet" href="static/editor.md/lib/codemirror/codemirror.min.css">
+  <script src="static/editor.md/lib/codemirror/codemirror.min.js"></script>
+  <script src="static/editor.md/lib/codemirror/modes.min.js"></script> -->
+  <script src="static/editor.md/lib/flowchart.min.js"></script>
+  <script src="static/editor.md/lib/jquery.flowchart.min.js"></script>
+  <script src="static/editor.md/lib/marked.min.js"></script>
+  <script src="static/editor.md/lib/prettify.min.js"></script>
+  <script src="static/editor.md/lib/raphael.min.js"></script>
+  <!-- <script src="static/editor.md/lib/sequence-diagram.min.js"></script> -->
+  <script src="static/editor.md/lib/underscore.min.js"></script>
+  <!-- <script src="static/editor.md/plugins/code-block-dialog/code-block-dialog.js"></script> -->
+  <!-- <script src="static/editor.md/plugins/emoji-dialog/emoji-dialog.js"></script>
+  <script src="static/editor.md/plugins/goto-line-dialog/goto-line-dialog.js"></script>
+  <script src="static/editor.md/plugins/help-dialog/help-dialog.js"></script>
+  <script src="static/editor.md/plugins/html-entities-dialog/html-entities-dialog.js"></script>
+  <script src="static/editor.md/plugins/image-dialog/image-dialog.js"></script>
+  <script src="static/editor.md/plugins/link-dialog/link-dialog.js"></script>
+  <script src="static/editor.md/plugins/preformatted-text-dialog/preformatted-text-dialog.js"></script>
+  <script src="static/editor.md/plugins/reference-link-dialog/reference-link-dialog.js"></script>
+  <script src="static/editor.md/plugins/table-dialog/table-dialog.js"></script>
+  <script src="static/editor.md/plugins/test-plugin/test-plugin.js"></script>
+  <script src="static/editor.md/plugins/plugin-template.js"></script> -->
+  <script src="static/editor.md/editormd.amd.min.js"></script>
+  <!-- <script src="static/editor.md/editormd.min.js"></script> -->
+  <link rel="stylesheet" href="https://www.showdoc.cc/static/editor.md/css/editormd.min.css">
+
+
+</head>
+<body>
+<div id="content">
+  <div :id="id" class="main-editor"></div>
+</div>
+</body>
+<script>
+  new Vue({
+    el: '#content',
+    data() {
+      return {
+        instance: null,
+        showImg:false,
+        imgSrc: '',
+
+        width: '',
+        content: '',
+        type: 'editor',
+        id: 'editor-md',
+        editorConfig: {
+          path: 'static/editor.md/lib/',
+          height: 1000,
+          taskList        : true,
+          tex             : true,  // 默认不解析
+          flowChart       : true,  // 默认不解析
+          sequenceDiagram : true,  // 默认不解析
+          syncScrolling: "single",
+          htmlDecode: 'style,script,iframe|filterXSS',
+          imageUpload: true,
+          imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp", "JPG", "JPEG", "GIF", "PNG", "BMP", "WEBP"],
+          onload: () => {
+            console.log('onload');
+          },
+        }
+      }
+    },
+    mounted() {
+      this.initEditor();
+      hljs.initHighlightingOnLoad()
+    },
+    methods: {
+      initEditor() {
+        this.$nextTick((editorMD = window.editormd) => {
+          if (editorMD) {
+            if (this.type == 'editor'){
+              this.instance = editorMD(this.id, this.editorConfig);
+              //草稿
+              //this.draft(); 鉴于草稿功能未完善。先停掉。
+              //window.addEventListener('beforeunload', e => this.beforeunloadHandler(e));
+            } else {
+              this.instance = editorMD.markdownToHTML(this.id, this.editorConfig);
+            }
+            this.deal_with_content();
+          }
+        });
+      },
+
+      //插入数据到编辑器中。插入到光标处
+      insertValue(insertContent){
+        this.instance.insertValue(this.html_decode(insertContent));
+      },
+
+      getMarkdown(){
+        return this.instance.getMarkdown();
+      },
+      editor_unwatch(){
+        return this.instance.unwatch();
+      },
+
+      editor_watch(){
+        return this.instance.watch();
+      },
+      clear(){
+        return this.instance.clear();
+      },
+
+      //草稿
+      draft(){
+        var that = this ;
+        //定时保存文本内容到localStorage
+        setInterval(()=>{
+          localStorage.page_content= that.getMarkdown() ;
+        }, 60000);
+
+        //检测是否有定时保存的内容
+        var page_content = localStorage.page_content ;
+        if (page_content && page_content.length > 0) {
+          localStorage.removeItem("page_content");
+          that.$confirm(that.$t('draft_tips'),'',{
+              showClose:false
+            }
+          ).then(()=>{
+            that.clear() ;
+            that.insertValue(page_content) ;
+            localStorage.removeItem("page_content");
+          }).catch(()=>{
+            localStorage.removeItem("page_content");
+          });
+        };
+
+      },
+      //关闭前提示
+      beforeunloadHandler(e){
+        e = e || window.event;
+
+        // 兼容IE8和Firefox 4之前的版本
+        if (e) {
+          e.returnValue = '提示';
+        }
+
+        // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+        return '提示';
+      },
+
+      //对内容做些定制化改造
+      deal_with_content(){
+        var that = this ;
+        //当表格列数过长时将自动出现滚动条
+        $.each($("#"+this.id+' table'), function() {
+          $(this).prop('outerHTML', '<div style="width: 100%;overflow-x: auto;">'+$(this).prop('outerHTML')+'</div>');
+        });
+
+        //超链接都在新窗口打开
+        $("#"+this.id+' a[href^="http"]').each(function() {
+          $(this).attr('target', '_blank');
+
+        });
+
+        //对表格进行一些改造
+        $("#"+this.id+" table tbody tr").each(function(){
+          var tr_this = $(this) ;
+          var td1 =  tr_this.find("td").eq(1).html() ;
+          var td2 =  tr_this.find("td").eq(2).html() ;
+          if(td1 =="object" || td1 =="array[object]" || td2 =="object" || td2 =="array[object]"){
+            tr_this.css({"background-color":"#F8F8F8"});
+          }else{
+            tr_this.css("background-color","#fff");
+          }
+          //设置表格hover
+          tr_this.hover(function(){
+            tr_this.css("background-color","#F8F8F8");
+          },function(){
+            if(td1 =="object" || td1 =="array[object]" || td2 =="object" || td2 =="array[object]"){
+              tr_this.css({"background-color":"#F8F8F8"});
+            }else{
+              tr_this.css("background-color","#fff");
+            }
+          });
+
+        });
+
+        //获取内容总长度
+        var contentWidth = $("#"+this.id+" p").width() ;
+        contentWidth = contentWidth ? contentWidth : 722;
+        //表格列 的宽度
+        $("#"+this.id+" table").each(function(i){
+          var $v =$(this).get(0) ;//原生dom对象
+          var num = $v.rows.item(0).cells.length ; //表格的列数
+          var colWidth = Math.floor(contentWidth/num) -2 ;
+          if (num <= 5) {
+            $(this).find("th").css("width",colWidth.toString()+"px");
+          }
+
+        });
+
+
+        //图片点击放大
+        $("#"+this.id+" img").click(function(){
+          var  img_url = $(this).attr("src");
+          that.showImg = true;
+          // 获取当前图片地址
+          that.imgSrc = img_url;
+        });
+
+        //表格头颜色
+        $("#"+this.id+" table thead tr").css("background-color","#409eff") ;
+        $("#"+this.id+" table thead tr").css("color","#fff") ;
+
+        //代码块美化
+        $("#"+this.id+" .linenums").css("padding-left","5px") ;
+        //$("#"+this.id+" .linenums li").css("list-style-type","none") ;
+        $("#"+this.id+" .linenums li").css("background-color","#fcfcfc") ;
+        $("#"+this.id+" pre").css("background-color","#fcfcfc") ;
+        $("#"+this.id+" pre").css("border","1px solid #e1e1e8") ;
+
+        $("#"+this.id+" code").css("color","#d14");
+
+      },
+
+
+      //转义
+      html_decode(str){
+        var s = "";
+        if (str.length == 0) return "";
+        s = str.replace(/&gt;/g, "&");
+        s = s.replace(/&lt;/g, "<");
+        s = s.replace(/&gt;/g, ">");
+        s = s.replace(/&nbsp;/g, " ");
+        s = s.replace(/&#39;/g, "\'");
+        s = s.replace(/&quot;/g, "\"");
+        //s = s.replace(/<br>/g, "\n");
+        return s;
+      }
+    }
+  })
+</script>
+</html>
