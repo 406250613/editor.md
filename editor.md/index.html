@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Marked in the browser</title>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./node_modules/editor.md/editormd.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/editor.md/css/editormd.min.css" />
+
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon">
+    <link type="text/css" rel="stylesheet" href="./node_modules/editor.md/lib/codemirror/codemirror.min.css">
+    <link type="text/css" rel="stylesheet" href="./node_modules/editor.md/lib/codemirror/addon/dialog/dialog.css">
+    <link type="text/css" rel="stylesheet" href="./node_modules/editor.md/lib/codemirror/addon/search/matchesonscrollbar.css">
+    <script id="-lib-codemirror-codemirror-min" type="text/javascript" src="./node_modules/editor.md/lib/codemirror/codemirror.min.js"></script>
+    <script id="-lib-codemirror-modes-min" type="text/javascript" src="./node_modules/editor.md/lib/codemirror/modes.min.js"></script>
+    <script id="-lib-codemirror-addons-min" type="text/javascript" src="./node_modules/editor.md/lib/codemirror/addons.min.js"></script>
+    <script id="-lib-marked-min" type="text/javascript" src="./node_modules/editor.md/lib/marked.min.js"></script>
+    <script id="-lib-prettify-min" type="text/javascript" src="./node_modules/editor.md/lib/prettify.min.js"></script>
+</head>
+<style>
+    html,body{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #md-editor{
+        margin: 0;
+    }
+    .toSubmit{
+        width: 55px;
+        height: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-size: 14px;
+        background: cornflowerblue;
+        color: #fff;
+        cursor: pointer;
+        position: fixed;
+        right: 5%;
+        bottom: 8%;
+        z-index: 10000000000;
+        transition: all .5s;
+    }
+    .toSubmit:hover{
+        width: 60px;
+        height: 60px;
+    }
+    .toSubmit:after{
+        content: '';
+        display: block;
+        width: 10px;
+        height: 130%;
+        background: #fff;
+        box-shadow: 0 0 30px;
+        position: absolute;
+        left: -15px;
+        opacity: .5;
+        transform: rotate(20deg);
+        animation:shine 5s infinite cubic-bezier(0.73, -0.13, 0.39, 1.15);
+        -webkit-animation:shine 5s infinite cubic-bezier(0.73, -0.13, 0.39, 1.15);
+    }
+    @keyframes shine
+    {
+        0% {left:-15px;}
+        30% {left:-15px;}
+        70% {left:70px;}
+        100% {left:70px;}
+    }
+
+    @-webkit-keyframes shine /*Safari and Chrome*/
+    {
+        0% {left:-15px;}
+        30% {left:-15px;}
+        70% {left:70px;}
+        100% {left:70px;}
+    }
+</style>
+<body>
+     <div id="md-editor">
+         <textarea style="display:none;">> Editor.md 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。</textarea>
+    </div>
+    <div class="toSubmit">提交</div>
+    <script type="text/javascript">
+        $(function() {
+             var editor = editormd("md-editor", {
+                width  : "98%",
+                height : "98%",
+                path   : "./node_modules/editor.md/lib/" // Autoload modules mode, codemirror, marked... dependents libs path
+            });
+            
+        });
+    </script>
+    <script>
+        $(function(){
+            $('.toSubmit').click(function(){
+                var mes = $('textarea').html()  //获取md内容
+                /////////执行上传操作，以后再用marked.js来显示md内容
+                console.log(mes)
+            })
+        })
+    </script>
+</body>
+</html>
