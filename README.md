@@ -1,4 +1,4 @@
-# showdoc_markdown
-提取出的showdoc的mackdown功能页面代码
+# editor.md
+提取出并稍加改动的editor.md功能页面代码，简洁易用
 
-**实时编辑器  一边编写一边实时显示转换出的界面**
+**实时编辑器 **
