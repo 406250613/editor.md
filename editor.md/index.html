@@ -89,11 +89,14 @@
          <textarea style="display:none;">> Editor.md 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。</textarea>
     </div>
     <div class="toSubmit">提交</div>
+        
+    </div>
     <script type="text/javascript">
         $(function() {
              var editor = editormd("md-editor", {
                 width  : "98%",
                 height : "98%",
+                saveHTMLToTextarea   : true, //开启转化成html代码，默认为false
                 path   : "./node_modules/editor.md/lib/" // Autoload modules mode, codemirror, marked... dependents libs path
             });
             
@@ -103,8 +106,9 @@
         $(function(){
             $('.toSubmit').click(function(){
                 var mes = $('textarea').html()  //获取md内容
-                /////////执行上传操作，以后再用marked.js来显示md内容
+                /////////执行上传操作，可以直接上传md代码以后再用marked.js来显示md内容；也可以开启 ‘saveHTMLToTextarea’ 来直接获取并上传html代码
                 console.log(mes)
+                $('.h').html(('[name=md-editor-html-code]').html())
             })
         })
     </script>
